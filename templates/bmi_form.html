@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form BMI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #e50914;
+        }
+        form {
+            background: #141414;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .person-card {
+            background: #1f1f1f;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        .person-card input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: white;
+        }
+        button {
+            background-color: #e50914;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #b20710;
+        }
+        .result-text {
+            color: #ffcccb;
+            margin-top: 10px;
+        }
+        .summary {
+            text-align: center;
+            margin-top: 20px;
+            background: #141414;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .summary h3 {
+            color: #e50914;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form BMI</h1>
+    <form method="POST" action="/hitung">
+        <input type="hidden" name="jumlah_orang" value="{{ jumlah_orang }}">
+        {% for i in range(jumlah_orang) %}
+            <div class="person-card">
+                <h3>Orang {{ i + 1 }}</h3>
+                <input type="number" name="berat_{{ i }}" placeholder="Berat (kg)" step="0.1" min="0" required>
+                <input type="number" name="tinggi_{{ i }}" placeholder="Tinggi (cm)" step="0.1" min="0" required>
+                {% if bmi %}
+                    <div class="result-text">BMI: {{ bmi[i] | round(2) }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">Hitung BMI</button>
+    </form>
+    {% if bmi %}
+        <div class="summary">
+            <h3>Statistik Berat (kg)</h3>
+            <p>Rata-rata: {{ stat.rata_rata_berat | round(2) }}</p>
+            <p>Median: {{ stat.median_berat | round(2) }}</p>
+            <p>Modus: {{ stat.modus_berat }}</p>
+            <h3>Statistik Tinggi (cm)</h3>
+            <p>Rata-rata: {{ stat.rata_rata_tinggi | round(2) }}</p>
+            <p>Median: {{ stat.median_tinggi | round(2) }}</p>
+            <p>Modus: {{ stat.modus_tinggi }}</p>
+            <h3>Statistik BMI</h3>
+            <p>Rata-rata: {{ stat.rata_rata_bmi | round(2) }}</p>
+            <p>Median: {{ stat.median_bmi | round(2) }}</p>
+            <p>Modus: {{ stat.modus_bmi }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>
