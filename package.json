@@ -1,0 +1,11 @@
+{
+  "name": "bmi-kalkulator",
+  "version": "1.0.0",
+  "description": "Aplikasi Kalkulator BMI menggunakan Flask",
+  "scripts": {
+    "build": "pip install -r requirements.txt"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
